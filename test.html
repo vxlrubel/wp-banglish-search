@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Avro Keyboard-like Web Implementation</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const replacements = {
+                'th': 'থ', 'dh': 'ধ', 'sh': 'শ', 'ch': 'চ', 'kh': 'খ',
+                'ph': 'ফ', 'bh': 'ভ', 'ng': 'ঙ', 'jh': 'ঝ',
+                'aa': 'আ', 'ee': 'ঈ', 'ii': 'ঈ', 'oo': 'উ', 'uu': 'ঊ',
+                'oi': 'ঐ', 'ou': 'ঔ',
+                'a': 'অ', 'b': 'ব', 'c': 'ক', 'd': 'দ', 'e': 'এ',
+                'f': 'ফ', 'g': 'গ', 'h': 'হ', 'i': 'ই', 'j': 'জ',
+                'k': 'ক', 'l': 'ল', 'm': 'ম', 'n': 'ন', 'o': 'ও',
+                'p': 'প', 'q': 'ক', 'r': 'র', 's': 'স', 't': 'ত',
+                'u': 'উ', 'v': 'ভ', 'w': 'ও', 'x': 'ক্স', 'y': 'য',
+                'z': 'জ'
+            };
+
+            function transliterate(input) {
+                let output = input;
+                // Sort replacements by length for proper matching
+                const keys = Object.keys(replacements).sort((a, b) => b.length - a.length);
+                for (let key of keys) {
+                    output = output.replace(new RegExp(key, 'gi'), replacements[key]);
+                }
+                return output;
+            }
+
+            document.getElementById('input').addEventListener('input', function() {
+                const originalText = this.value;
+                const transliteratedText = transliterate(originalText);
+                document.getElementById('output').value = transliteratedText;
+            });
+        });
+    </script>
+</head>
+<body>
+    <h3>Type in Banglish:</h3>
+    <textarea id="input" rows="5" cols="50"></textarea>
+    <h3>Output in Bengali:</h3>
+    <textarea id="output" rows="5" cols="50" readonly></textarea>
+</body>
+</html>
